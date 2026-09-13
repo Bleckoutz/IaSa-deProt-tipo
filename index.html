@@ -3,10 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroLink_FIEB - Cuidado Conectado DM1</title>
+  <title>NeuroLink FIEB - Cuidado Conectado DM1</title>
+
+  <!-- PWA & Ícones de Atalho -->
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="https://i.ibb.co/0pBBjVgG/Logo-barbearia-mascote-cl-ssico-verde.png">
+  <link rel="apple-touch-icon" href="https://i.ibb.co/0pBBjVgG/Logo-barbearia-mascote-cl-ssico-verde.png">
+  <meta name="theme-color" content="#1d4ed8">
+
+  <!-- Fontes e CSS -->
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -256,39 +263,39 @@
       </div>
     </section>
 
-    <!-- MÓDULO MÉDICO (ESTRUTURA COMPLETA ADICIONADA DIRETO NO HTML) -->
+    <!-- MÓDULO MÉDICO -->
     <section id="tab-medico" class="tab-content">
-      <div class="medico-card-container card">
+      <div class="medico-card-container">
         
         <!-- Cabeçalho & Ações Clínicas -->
-        <div class="medico-top-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div class="medico-top-bar">
           <div>
-            <h2>🩺 Painel Clínico Endocrinológico</h2>
-            <p style="color: #64748b; font-size: 0.9rem;">Paciente: Arthur Silva | Prontuário: #FIEB-992</p>
+            <h2 class="medico-title">🩺 Painel Clínico Endocrinológico</h2>
+            <p class="medico-sub">Paciente: Arthur Silva | Prontuário: #FIEB-992</p>
           </div>
-          <button class="btn-refresh" onclick="loadDashboard()">🔄 Sincronizar Dados</button>
+          <button class="btn-pdf" onclick="loadDashboard()">🔄 Sincronizar</button>
         </div>
 
         <!-- Cards de Indicadores Médicos (KPIs) -->
-        <div class="medico-kpi-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px;">
-          <div class="card-kpi" style="background: #f8fafc; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
-            <small style="color: #64748b; font-size: 0.75rem;">Média Glicêmica</small>
-            <h3 style="margin: 5px 0 0; color: #1e293b;"><span id="med-kpi-avg">123.5</span> <small style="font-size: 0.7rem;">mg/dL</small></h3>
+        <div class="medico-kpi-grid">
+          <div class="kpi-box">
+            <label>Média Glicêmica</label>
+            <span><span id="med-kpi-avg">123.5</span> <small style="font-size: 0.75rem;">mg/dL</small></span>
           </div>
-          <div class="card-kpi" style="background: #f8fafc; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
-            <small style="color: #64748b; font-size: 0.75rem;">HbA1c Est.</small>
-            <h3 style="margin: 5px 0 0; color: #1e293b;" id="med-kpi-a1c">5.9%</h3>
+          <div class="kpi-box">
+            <label>HbA1c Est.</label>
+            <span id="med-kpi-a1c">5.9%</span>
           </div>
-          <div class="card-kpi" style="background: #f8fafc; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
-            <small style="color: #64748b; font-size: 0.75rem;">No Alvo (TIR)</small>
-            <h3 style="margin: 5px 0 0; color: #10b981;" id="med-kpi-tir">100%</h3>
+          <div class="kpi-box">
+            <label>No Alvo (TIR)</label>
+            <span id="med-kpi-tir" style="color: #10b981;">100%</span>
           </div>
         </div>
 
         <!-- Seção de Histórico de Auditoria & Logs -->
         <div class="logs-section">
-          <h3 style="font-size: 1.1rem; margin-bottom: 10px;">📋 Registro de Auditoria & Eventos da IA</h3>
-          <div id="medical-logs" class="logs-list" style="background: #f1f5f9; padding: 12px; border-radius: 8px; min-height: 120px; max-height: 250px; overflow-y: auto;">
+          <h3 class="medico-title" style="margin-bottom: 12px;">📋 Registro de Auditoria & Eventos da IA</h3>
+          <div id="medical-logs" class="audit-list">
             <!-- Os logs dinâmicos do JS entram aqui -->
           </div>
         </div>
