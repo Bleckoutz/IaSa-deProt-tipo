@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroLink_FIEB - Cuidado Conectado DM1</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="logo">
+      <span class="icon">💙</span>
+      <h1>NeuroLink <span>FIEB</span></h1>
+    </div>
+    <div class="user-badge" id="current-user">Persona: Arthur (Criança)</div>
+  </header>
+
+  <nav class="persona-nav">
+    <button class="nav-btn active" onclick="switchTab('arthur', event)">🎮 Arthur</button>
+    <button class="nav-btn" onclick="switchTab('pais', event)" id="nav-pais">🏠 Família</button>
+    <button class="nav-btn" onclick="switchTab('escola', event)">🏫 Escola</button>
+    <button class="nav-btn" onclick="switchTab('medico', event)">🩺 Médico</button>
+  </nav>
+
+  <main class="app-content">
+
+    <!-- MÓDULO ARTHUR -->
+    <section id="tab-arthur" class="tab-content active">
+      
+      <!-- Gamificação / Energia -->
+      <div class="energy-banner">
+        <div class="energy-header">
+          <span>⭐ Energia do dia</span>
+          <strong id="energy-score">62 / 100 pts</strong>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="energy-fill" style="width: 62%;"></div>
+        </div>
+        <small class="energy-sub">Registre mais para ganhar estrelas! 🌟</small>
+      </div>
+
+      <!-- Feedback Inteligente da IA -->
+      <div id="ia-mascot-box" class="mascot-card" style="display:none;">
+        <span class="mascot-icon">🤖</span>
+        <p id="ia-mascot-text">Olá Arthur! O que vamos registrar agora?</p>
+      </div>
+
+      <h3 class="section-title">AÇÕES RÁPIDAS</h3>
+
+      <!-- Grid de 4 Botões Rápidos -->
+      <div class="actions-grid">
+        <div class="action-card food" onclick="quickRegister('comida', 'O que comi?')">
+          <span class="emoji">🍎</span>
+          <span>O que comi</span>
+        </div>
+        <div class="action-card glycemia" onclick="quickRegister('glicemia', 'Minha Glicemia')">
+          <span class="emoji">🩸</span>
+          <span>Minha Glicemia</span>
+        </div>
+        <div class="action-card sport" onclick="quickRegister('esporte', 'Brincadeira & Esporte')">
+          <span class="emoji">⚽</span>
+          <span>Brincadeira & Esporte</span>
+        </div>
+        <div class="action-card mood" onclick="quickRegister('humor', 'Meu Humor')">
+          <span class="emoji">😊</span>
+          <span>Meu Humor</span>
+        </div>
+      </div>
+
+      <!-- Seção Como está seu corpo -->
+      <div class="card body-status-card">
+        <h3>Como está seu corpo agora?</h3>
+        <div class="mood-emojis">
+          <button onclick="registerMood('Ótimo!')"><span>😄</span><small>Ótimo!</small></button>
+          <button onclick="registerMood('Bem')"><span>😊</span><small>Bem</small></button>
+          <button onclick="registerMood('Normal')"><span>😐</span><small>Normal</small></button>
+          <button onclick="registerMood('Fraco')"><span>😟</span><small>Fraco</small></button>
+          <button onclick="registerMood('Mal')"><span>😢</span><small>Mal</small></button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MÓDULO FAMÍLIA -->
+    <section id="tab-pais" class="tab-content">
+      
+      <!-- Cabeçalho de Acompanhamento da Criança -->
+      <div class="family-child-header">
+        <div class="child-info">
+          <small>ACOMPANHAMENTO</small>
+          <h2>Arthur Silva</h2>
+        </div>
+        <div class="child-avatar">👦</div>
+      </div>
+
+      <!-- Card Destaque de Última Glicemia -->
+      <div class="family-glycemia-card">
+        <div class="glycemia-info">
+          <span class="label">Última Glicemia</span>
+          <div class="value-group">
+            <span class="value" id="fam-glycemia-val">135</span>
+            <span class="unit">mg/dL 📈</span>
+          </div>
+          <small id="fam-glycemia-time">Sincronizado recentemente</small>
+        </div>
+        <div class="glycemia-status-badge normal" id="fam-glycemia-badge">
+          <span>NORMAL</span>
+          <small>Meta: 70-180</small>
+        </div>
+      </div>
+
+      <!-- Barra de Busca de Alimentos Rápida -->
+      <div class="food-search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="food-search-input" placeholder="Buscar alimento (ex: pão com queijo)..." onkeypress="handleFoodSearch(event)">
+        <span class="action-icon" onclick="openAssistantModal()">🎤</span>
+        <span class="action-icon" onclick="openAssistantModal()">📷</span>
+      </div>
+
+      <!-- Timeline Vertical da Rotina -->
+      <div class="routine-container">
+        <h4 class="routine-title">ROTINA DE HOJE</h4>
+
+        <div id="family-timeline" class="timeline-list">
+          <div class="timeline-item">
+            <span class="time">07:00</span>
+            <div class="timeline-card">
+              <div class="card-header">
+                <strong>🍞 COMIDA</strong>
+                <span class="tag home">Casa</span>
+              </div>
+              <p>30g carb — Café da manhã</p>
+              <small class="ia-subtext">🤖 IA: Bom aporte de energia!</small>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="time">07:30</span>
+            <div class="timeline-card">
+              <div class="card-header">
+                <strong>🩸 GLICEMIA</strong>
+                <span class="tag home">Casa</span>
+              </div>
+              <p>112 mg/dL — Antes das aulas</p>
+              <small class="ia-subtext">🤖 IA: Nível ideal para começar o dia.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botão para Abrir Assistente Virtual IA -->
+      <button class="btn-assistant-float" onclick="openAssistantModal()">
+        🤖 Tirar Dúvida com o Assistente NeuroLink
+      </button>
+
+      <!-- Modal do Assistente Virtual NeuroLink -->
+      <div id="assistant-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>🤖 Assistente NeuroLink</h3>
+            <button class="close-btn" onclick="closeAssistantModal()">✕</button>
+          </div>
+          <div class="chat-box" id="chat-messages">
+            <div class="msg bot">Olá! Tire dúvidas sobre contagem de carboidratos, correções de glicemia ou alimentação do Arthur.</div>
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Pergunte sobre alimentos ou insulina..." onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()">Enviar</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MÓDULO ESCOLA — ACESSO RÁPIDO -->
+    <section id="tab-escola" class="tab-content">
+      <div class="escola-card-container">
+        
+        <!-- Cabeçalho do Aluno -->
+        <div class="escola-header">
+          <div class="escola-title-bar">
+            <span>MODO ESCOLA — ACESSO RÁPIDO</span>
+            <span class="status-online">🟢 07:30 ✓</span>
+          </div>
+          <h2>Arthur Silva</h2>
+          <p class="sub-info">4º Ano A — Sala 204</p>
+          
+          <!-- Banner de ÚLTIMA GLICEMIA -->
+          <div class="glycemia-banner-escola" id="escola-glycemia-box">
+            <span class="icon">🩸</span>
+            <div>
+              Última glicemia registrada: <strong id="escola-glicemia-val">135 mg/dL</strong>
+              <span class="status-tag normal" id="escola-glicemia-status">Status Normal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sinais para Observar -->
+        <div class="escola-body">
+          <h4 class="escola-section-title">⚠️ O QUE OBSERVAR DURANTE A AULA?</h4>
+
+          <div class="symptom-card warning-light">
+            <span class="symptom-emoji">🤒</span>
+            <div>
+              <strong>Suor Frio / Palidez</strong>
+              <p>Pele úmida ou fria, rosto esbranquiçado ou acinzentado.</p>
+            </div>
+          </div>
+
+          <div class="symptom-card warning-red">
+            <span class="symptom-emoji">🌀</span>
+            <div>
+              <strong>Tontura / Desânimo</strong>
+              <p>Dificuldade de concentrar, olhar vago, não responde bem.</p>
+            </div>
+          </div>
+
+          <div class="symptom-card warning-purple">
+            <span class="symptom-emoji">😡</span>
+            <div>
+              <strong>Irritabilidade Repentina</strong>
+              <p>Choro sem motivo, agitação súbita, comportamento incomum.</p>
+            </div>
+          </div>
+
+          <!-- Conduta Imediata -->
+          <div class="action-protocol-card">
+            <h4 class="protocol-title">✏️ O que fazer imediatamente:</h4>
+            <div class="step-item">
+              <span class="step-num">1</span>
+              <p>Oferecer <strong>15g de carboidrato rápido</strong> — 1 copo de suco ou sachê de glicose.</p>
+            </div>
+            <div class="step-item">
+              <span class="step-num">2</span>
+              <p>Aguardar <strong>15 minutos</strong> e observar a melhora do aluno.</p>
+            </div>
+            <div class="step-item">
+              <span class="step-num">3</span>
+              <p><strong>NÃO</strong> aplicar insulina em caso de hipoglicemia.</p>
+            </div>
+          </div>
+
+          <!-- Botão de Emergência -->
+          <a href="tel:+5531999999999" class="btn-call-mom">
+            📞 LIGAR PARA A MÃE (ROSA)
+          </a>
+          
+          <div id="whatsapp-alert-banner" class="whatsapp-banner" style="display: none;">
+            📲 Alerta automático enviado via WhatsApp para os Pais!
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MÓDULO MÉDICO (ESTRUTURA COMPLETA ADICIONADA DIRETO NO HTML) -->
+    <section id="tab-medico" class="tab-content">
+      <div class="medico-card-container card">
+        
+        <!-- Cabeçalho & Ações Clínicas -->
+        <div class="medico-top-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <div>
+            <h2>🩺 Painel Clínico Endocrinológico</h2>
+            <p style="color: #64748b; font-size: 0.9rem;">Paciente: Arthur Silva | Prontuário: #FIEB-992</p>
+          </div>
+          <button class="btn-refresh" onclick="loadDashboard()">🔄 Sincronizar Dados</button>
+        </div>
+
+        <!-- Cards de Indicadores Médicos (KPIs) -->
+        <div class="medico-kpi-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px;">
+          <div class="card-kpi" style="background: #f8fafc; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
+            <small style="color: #64748b; font-size: 0.75rem;">Média Glicêmica</small>
+            <h3 style="margin: 5px 0 0; color: #1e293b;"><span id="med-kpi-avg">123.5</span> <small style="font-size: 0.7rem;">mg/dL</small></h3>
+          </div>
+          <div class="card-kpi" style="background: #f8fafc; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
+            <small style="color: #64748b; font-size: 0.75rem;">HbA1c Est.</small>
+            <h3 style="margin: 5px 0 0; color: #1e293b;" id="med-kpi-a1c">5.9%</h3>
+          </div>
+          <div class="card-kpi" style="background: #f8fafc; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
+            <small style="color: #64748b; font-size: 0.75rem;">No Alvo (TIR)</small>
+            <h3 style="margin: 5px 0 0; color: #10b981;" id="med-kpi-tir">100%</h3>
+          </div>
+        </div>
+
+        <!-- Seção de Histórico de Auditoria & Logs -->
+        <div class="logs-section">
+          <h3 style="font-size: 1.1rem; margin-bottom: 10px;">📋 Registro de Auditoria & Eventos da IA</h3>
+          <div id="medical-logs" class="logs-list" style="background: #f1f5f9; padding: 12px; border-radius: 8px; min-height: 120px; max-height: 250px; overflow-y: auto;">
+            <!-- Os logs dinâmicos do JS entram aqui -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
