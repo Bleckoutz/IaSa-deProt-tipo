@@ -3,12 +3,12 @@
   "name": "NeuroLink App",
   "icons": [
     {
-      "src": "https://i.ibb.co/0pBBjVgG/Logo-barbearia-mascote-cl-ssico-verde.png",
+      "src": "icon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://i.ibb.co/0pBBjVgG/Logo-barbearia-mascote-cl-ssico-verde.png",
+      "src": "icon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
